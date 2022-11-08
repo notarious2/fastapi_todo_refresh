@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from database import Base, engine
 from routers import user, task, authorization
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi_jwt_auth import AuthJWT
+from schemas import Settings
 
 # Base.metadata.create_all(bind=engine)
 
@@ -23,6 +25,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@AuthJWT.load_config
+def get_config():
+    return Settings()
 
 @app.get('/', tags=["root"])
 async def root():

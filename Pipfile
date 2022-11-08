@@ -15,6 +15,7 @@ psycopg2-binary = "*"
 uuid = "*"
 pyjwt = "*"
 passlib = {extras = ["bcrypt"], version = "*"}
+fastapi-jwt-auth = "*"
 
 [dev-packages]
 

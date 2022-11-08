@@ -60,3 +60,7 @@ class UserDisplay(BaseModel):
     # makes links between User and UserDisplay schemas
     class Config:
         orm_mode = True
+
+
+class Settings(BaseModel):
+    authjwt_secret_key: str = 'b89c3cbe2ec060fe94e5957bc390a0d4e5c9004ed05f543e1544f72637792e1b'

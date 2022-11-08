@@ -4,27 +4,53 @@ from database import get_db
 import crud, auth
 from fastapi.security.oauth2 import OAuth2PasswordRequestForm
 from password_hashing import Hash
+from fastapi_jwt_auth import AuthJWT
+from fastapi.encoders import jsonable_encoder
 
 router = APIRouter(
     tags = ['auth']
 )
 
 @router.post('/login')
-def login(db: Session = Depends(get_db), form_data: OAuth2PasswordRequestForm = Depends()):
+async def login(db: Session = Depends(get_db), form_data: OAuth2PasswordRequestForm = Depends(), Authorize: AuthJWT = Depends()):
+   """
+    ## LogIn a User
+    This requires the following fields:
+    ```
+        username: str
+        password: str
+
+    and returns a token pair 'access' and 'refresh'
+    ```
+        
+   """
+   print("USERNAME", form_data.username)
+   print("PASSWORD", form_data.password) 
+ 
    user = authenticate_user(db=db, username=form_data.username, password=form_data.password)
+    
+   print("USER:", user)
+
    if not user:
     raise HTTPException(
        	status_code=status.HTTP_401_UNAUTHORIZED,
        	detail="Incorrect email or password",
        	headers={"WWW-Authenticate": "Bearer"},
    	)
-   access_token = auth.create_access_token(data={"username": user.username}) 
-   return {
+   access_token = Authorize.create_access_token(subject = user.username)
+   refresh_token = Authorize.create_refresh_token(subject = user.username)
+    
+   print(access_token)
+    
+   response = {
         "access_token": access_token,
+        "refresh_token": refresh_token,
         "token_type": "bearer",
         "user_id": user.user_id,
         "username": user.username
     }
+   
+   return jsonable_encoder(response) 
 
 
 #Authenticate user based on username and password

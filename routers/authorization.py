@@ -1,12 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm.session import Session
 from database import get_db
-import crud, auth
+import crud
 from fastapi.security.oauth2 import OAuth2PasswordRequestForm
 from password_hashing import Hash
 from fastapi_jwt_auth import AuthJWT
 from fastapi.encoders import jsonable_encoder
-
 router = APIRouter(
     tags = ['auth']
 )
@@ -23,14 +22,10 @@ async def login(db: Session = Depends(get_db), form_data: OAuth2PasswordRequestF
     and returns a token pair 'access' and 'refresh'
     ```
         
-   """
-   print("USERNAME", form_data.username)
-   print("PASSWORD", form_data.password) 
- 
+   """ 
    user = authenticate_user(db=db, username=form_data.username, password=form_data.password)
     
    print("USER:", user)
-
    if not user:
     raise HTTPException(
        	status_code=status.HTTP_401_UNAUTHORIZED,
@@ -51,6 +46,13 @@ async def login(db: Session = Depends(get_db), form_data: OAuth2PasswordRequestF
     }
    
    return jsonable_encoder(response) 
+
+@router.get('/refresh')
+def refresh(Authorize: AuthJWT = Depends()):
+    Authorize.jwt_refresh_token_required()
+    current_user = Authorize.get_jwt_subject()
+    new_access_token = Authorize.create_access_token(subject=current_user)
+    return {"access_token": new_access_token}
 
 
 #Authenticate user based on username and password

@@ -1,6 +1,7 @@
 from datetime import date
 from pydantic import BaseModel
 from typing import Optional
+from config import settings
 
 
 
@@ -63,4 +64,4 @@ class UserDisplay(BaseModel):
 
 
 class Settings(BaseModel):
-    authjwt_secret_key: str = 'b89c3cbe2ec060fe94e5957bc390a0d4e5c9004ed05f543e1544f72637792e1b'
+    authjwt_secret_key: str = str(settings.SECRET_KEY)

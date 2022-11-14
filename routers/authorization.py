@@ -6,6 +6,8 @@ from fastapi.security.oauth2 import OAuth2PasswordRequestForm
 from password_hashing import Hash
 from fastapi_jwt_auth import AuthJWT
 from fastapi.encoders import jsonable_encoder
+import datetime
+expires = datetime.timedelta(seconds=5)
 router = APIRouter(
     tags = ['auth']
 )
@@ -32,7 +34,7 @@ async def login(db: Session = Depends(get_db), form_data: OAuth2PasswordRequestF
        	detail="Incorrect email or password",
        	headers={"WWW-Authenticate": "Bearer"},
    	)
-   access_token = Authorize.create_access_token(subject = user.username)
+   access_token = Authorize.create_access_token(subject = user.username, expires_time=expires)
    refresh_token = Authorize.create_refresh_token(subject = user.username)
     
    print(access_token)
@@ -51,7 +53,7 @@ async def login(db: Session = Depends(get_db), form_data: OAuth2PasswordRequestF
 def refresh(Authorize: AuthJWT = Depends()):
     Authorize.jwt_refresh_token_required()
     current_user = Authorize.get_jwt_subject()
-    new_access_token = Authorize.create_access_token(subject=current_user)
+    new_access_token = Authorize.create_access_token(subject=current_user,expires_time=expires)
     return {"access_token": new_access_token}
 
 

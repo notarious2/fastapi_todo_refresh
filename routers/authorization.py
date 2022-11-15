@@ -27,7 +27,6 @@ async def login(db: Session = Depends(get_db), form_data: OAuth2PasswordRequestF
    """ 
    user = authenticate_user(db=db, username=form_data.username, password=form_data.password)
     
-   print("USER:", user)
    if not user:
     raise HTTPException(
        	status_code=status.HTTP_401_UNAUTHORIZED,
@@ -36,8 +35,7 @@ async def login(db: Session = Depends(get_db), form_data: OAuth2PasswordRequestF
    	)
    access_token = Authorize.create_access_token(subject = user.username, expires_time=expires)
    refresh_token = Authorize.create_refresh_token(subject = user.username)
-    
-   print(access_token)
+   
     
    response = {
         "access_token": access_token,

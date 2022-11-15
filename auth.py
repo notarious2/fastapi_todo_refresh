@@ -18,9 +18,8 @@ def decode_access_token(db, token):
     headers={"WWW-Authenticate": "Bearer"},
   )
   try:
-    print("HERE", token)
     payload = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
-    print("payload", payload)
+    # print("payload", payload)
     username: str = payload.get("sub")
     if username is None:
       raise credentials_exception
@@ -33,10 +32,9 @@ def decode_access_token(db, token):
   
   user = crud.get_user_by_username(db, username=username)
   if user is None:
-    raise credentials_exceptions
+    raise credentials_exception
   return user
 
 def get_current_user(db: Session = Depends(get_db),
                 	token: str = Depends(oauth2_scheme)):
-   print(token)
    return decode_access_token(db, token)

@@ -5,7 +5,6 @@ from config import settings
 engine = create_engine(settings.DATABASE_URL, echo = True)
 
 Base = declarative_base()
-print(settings.DATABASE_URL)
 
 SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 

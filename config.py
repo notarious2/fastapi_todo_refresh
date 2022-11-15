@@ -23,6 +23,3 @@ class Settings:
 
 
 settings = Settings()
-
-print(settings.DATABASE_URL)
-print(settings.POSTGRES_DB)

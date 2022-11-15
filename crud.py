@@ -35,7 +35,6 @@ def add_task(db: Session, task: schemas.TaskCreate, current_user: models.UserMod
 
 # get all tasks of a LOGGED IN user
 def get_tasks(db: Session, current_user: models.UserModel):
-    print("ALL TASKS", db.query(models.TaskModel).filter(models.TaskModel.user_id == current_user.user_id).all())
     return db.query(models.TaskModel).filter(models.TaskModel.user_id == current_user.user_id).all()
 
 # get all tasks of all users
@@ -75,7 +74,6 @@ def update_task(db: Session, task_id: int, new_task: schemas.TaskOptional, user_
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
         detail = "Only Task Creator Can Delete Task")
     # can change text, priority and completed if passed
-    print("NEW TASK", new_task)
     if new_task.text: task.text = new_task.text 
     if new_task.priority: task.priority = new_task.priority 
     #need to be careful here as completed is BOOLEAN

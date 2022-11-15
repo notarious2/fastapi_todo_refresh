@@ -5,6 +5,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi_jwt_auth import AuthJWT
 from schemas import Settings
 
+from alembic.config import Config
+import alembic.command
+
+config = Config('alembic.ini')
+config.attributes['configure_logger'] = False
+
+alembic.command.upgrade(config, 'head')
 # simplistic way to create the database tables:
 # Base.metadata.create_all(bind=engine)
 

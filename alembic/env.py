@@ -38,6 +38,10 @@ target_metadata = models.Base.metadata
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
 
+# to run alembic commands 
+
+if config.attributes.get('configure_logger', True):
+    fileConfig(config.config_file_name)
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.

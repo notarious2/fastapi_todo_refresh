@@ -16,6 +16,7 @@ uuid = "*"
 pyjwt = "*"
 passlib = {extras = ["bcrypt"], version = "*"}
 fastapi-jwt-auth = "*"
+alembic = "*"
 
 [dev-packages]
 

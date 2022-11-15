@@ -5,16 +5,19 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi_jwt_auth import AuthJWT
 from schemas import Settings
 
+# simplistic way to create the database tables:
 # Base.metadata.create_all(bind=engine)
 
 
 app = FastAPI()
 
-#INCLUDING USER ROUTER
+# including USER router
 app.include_router(user.router)
-#INCLUDING TASK ROUTER
+
+# including TASK router
 app.include_router(task.router)
-#INCLUDING AUTHORIZATION ROUTER
+
+# including AUTHORIZATION router
 app.include_router(authorization.router)
 
 app.add_middleware(

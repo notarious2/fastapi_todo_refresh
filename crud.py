@@ -6,7 +6,7 @@ import models, schemas
 import uuid
 from password_hashing import Hash
 from fastapi import HTTPException, status
-
+from datetime import datetime
 # TASK RELATED QUERIES
 
 # need this function:
@@ -128,7 +128,8 @@ def add_user(db: Session, user: schemas.UserCreate):
     email = user.email,
     name = user.name,
     username = user.username,
-    password = password)
+    password = password,
+    created_at = datetime.now())
     db.add(new_user)
     db.commit()
     db.refresh(new_user)

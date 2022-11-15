@@ -2,7 +2,7 @@ from datetime import date
 from pydantic import BaseModel
 from typing import Optional
 from config import settings
-
+from datetime import datetime
 
 
 class TaskBase(BaseModel):
@@ -42,6 +42,7 @@ class User(BaseModel):
     email: str
     username: str
     password: str
+    created_at: datetime
     # class Config:
     #     orm_mode = True
 
@@ -50,7 +51,7 @@ class UserCreate(BaseModel):
     email: str
     username: str
     password: str
-    
+
     class Config:
         orm_mode = True
 
@@ -58,6 +59,8 @@ class UserDisplay(BaseModel):
     username: str
     email: str
     user_id: str
+    created_at: datetime
+
     # makes links between User and UserDisplay schemas
     class Config:
         orm_mode = True

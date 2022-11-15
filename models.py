@@ -1,5 +1,5 @@
 from email.policy import default
-from sqlalchemy import Column, Date, Integer, String, Boolean, ForeignKey
+from sqlalchemy import Column, Date, Integer, String, Boolean, ForeignKey, DateTime
 from database import Base
 from sqlalchemy.orm import relationship
 
@@ -10,7 +10,7 @@ class UserModel(Base):
     name = Column(String, index=False)
     username = Column(String, unique=True, index=True)
     password = Column(String)
-
+    created_at = Column(DateTime)
     todos = relationship("TaskModel", back_populates = "owner")
     # class Config:
     #     orm_mode = True

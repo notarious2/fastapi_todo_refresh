@@ -7,7 +7,7 @@ from password_hashing import Hash
 from fastapi_jwt_auth import AuthJWT
 from fastapi.encoders import jsonable_encoder
 import datetime
-expires = datetime.timedelta(minutes=1)
+expires = datetime.timedelta(days=1)
 router = APIRouter(
     tags = ['auth']
 )

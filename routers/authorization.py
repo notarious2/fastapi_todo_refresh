@@ -9,7 +9,7 @@ from fastapi.encoders import jsonable_encoder
 import datetime
 from config import settings
 
-expires = datetime.timedelta(minutes=settings.ACCESS_TOKEN_EXPIRES_MINUTES)
+expires = datetime.timedelta(minutes=int(settings.ACCESS_TOKEN_EXPIRES_MINUTES))
 router = APIRouter(
     tags = ['auth']
 )

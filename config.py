@@ -19,7 +19,7 @@ class Settings:
     # DATABASE_URL = "postgresql://postgres:9QwHEVTfq137WwSOwYVY@containers-us-west-127.railway.app:5681/railway"
     SECRET_KEY : str = os.getenv("SECRET_KEY")
     ALGORITHM: str = os.getenv('ALGORITHM')
-    ACCESS_TOKEN_EXPIRE_MINUTES = os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES")
+    ACCESS_TOKEN_EXPIRES_MINUTES = os.getenv("ACCESS_TOKEN_EXPIRES_MINUTES")
 
 
 settings = Settings()

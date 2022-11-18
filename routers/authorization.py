@@ -32,7 +32,7 @@ async def login(db: Session = Depends(get_db), form_data: OAuth2PasswordRequestF
    if not user:
     raise HTTPException(
        	status_code=status.HTTP_401_UNAUTHORIZED,
-       	detail="Incorrect email or password",
+       	detail="Incorrect username or password",
        	headers={"WWW-Authenticate": "Bearer"},
    	)
    access_token = Authorize.create_access_token(subject = user.username, expires_time=expires)

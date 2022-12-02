@@ -19,7 +19,6 @@ def decode_access_token(db, token):
   )
   try:
     payload = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
-    # print("payload", payload)
     username: str = payload.get("sub")
     if username is None:
       raise credentials_exception
